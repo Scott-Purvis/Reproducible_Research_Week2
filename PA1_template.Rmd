@@ -34,6 +34,7 @@ The dataset contains a subset of variables from the original dataset:
  - interval: Identifier for the 5-minute interval in which measurement was taken  
 
 ```{r ImportData}
+setwd("C:/Users/purviss/ownCloud/RWorking/Coursera/Reproducible Research/Week2")
 steps <- read.csv("activity.csv")
 str(steps)
 ```
@@ -56,10 +57,10 @@ str(steps)
 For this part of the assignment, ignore the missing values in the dataset.
 ```{r StepsDay}
 s1 <- steps%>% select(date, steps)%>% group_by(date)%>% summarise_all(funs(sum))
-s1a <- round(sum(s1$steps, na.rm = TRUE)/nrow(s1),0)
+s1a <- round(mean(s1$steps, na.rm = TRUE),0)
 ```
 
-There was a total of  `r s1a` steps taken PER day  
+There was a total of  `r format(s1a, scientific=FALSE)` steps taken per day.    
 
 **2. Make a histogram of the total number of steps taken each day**  
 ```{r StepsDayHist}
@@ -96,7 +97,7 @@ s2.maxsteps <- round(s2[which.max(s2$avgsteps),]$avgsteps,1)
 s2.maxsteps.interval <- s2[which.max(s2$avgsteps),]$interval
 ```
 
-5-minute time interval at `r s2.maxsteps.interval` minutes has an average of `r s2.maxsteps'.
+5-minute time interval at `r s2.maxsteps.interval` minutes has an average of `r s2.maxsteps` steps.
 
 
 ###Imputing missing values
@@ -156,11 +157,21 @@ hist(s1$steps,
 s4mean <- round(mean(s4$steps, na.rm = TRUE),0)
 s4median <- round(median(s4$steps, na.rm = TRUE),0)
 ```
+**4c Do these values differ from the estimates from the first part of the assignment?** 
+
+Looking at the table below, mean and median value do not change
+  
+
 |           |   Mean   |   Median  |
 |----------|----------|----------|
 Ignoring NAs|`r format(s1mean, scientific=FALSE)`|`r s1median`|
 After Imputation|`r format(s4mean, scientific=FALSE)`|`r format(s4median, scientific=FALSE)`|
+  
+**4d   What is the impact of imputing missing data on the estimates of the total daily number of steps?** 
 
+Imputing missing data with the mean number of steps per the specific 5-minute interval had no impact on the on estimating the total daily steps.
+  
+  
 ###Are there differences in activity patterns between weekdays and weekends? 
 
 **Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.**  
