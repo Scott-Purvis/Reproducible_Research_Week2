@@ -2,7 +2,9 @@
 title: "Reproducible Research - Week 2 Assignment"
 author: "S. Purvis"
 date: "November 10, 2017"
-output: html_document
+output: 
+    html_document: 
+    keep_md: true
 ---
 
 ```{r setup, include=FALSE}
@@ -34,7 +36,6 @@ The dataset contains a subset of variables from the original dataset:
  - interval: Identifier for the 5-minute interval in which measurement was taken  
 
 ```{r ImportData}
-setwd("C:/Users/purviss/ownCloud/RWorking/Coursera/Reproducible Research/Week2")
 steps <- read.csv("activity.csv")
 str(steps)
 ```
